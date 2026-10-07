@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beats by Dre Taiwan | 官方網站風格復刻</title>
+    <style>
+        /* ==========================================================================
+           【教學說明 - 1. 如何修改顏色 (Color Palette)】
+           您可以在下方 :root 全域變數中修改色彩，整頁就會自動套用新顏色：
+           - --primary-black: 主背景黑色/深色字體
+           - --primary-white: 主純白色
+           - --accent-red: Beats 標誌性的品牌紅 (可改為任何強調色)
+           - --card-bg: 產品卡片背景色
+           - --text-muted: 次要灰字顏色
+           ========================================================================== */
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #111111;
+            --primary-white: #ffffff;
+            --accent-red: #e01e2e;
+            --card-bg: #f5f5f7;
+            --text-dark: #1d1d1f;
+            --text-muted: #86868b;
+            --border-color: #e5e5e5;
+
+            /* ==========================================================================
+               【教學說明 - 2. 如何修改區塊間距 (Section Spacing & Margins)】
+               若覺得整體區塊太擠或太鬆，可以修改以下間距變數：
+               - --section-padding-desktop: 桌機版每個大區塊的上下的留白間距
+               - --section-padding-mobile: 手機版每個大區塊的上下的留白間距
+               - --container-padding: 頁面左右邊界間距
+               ========================================================================== */
+            --section-padding-desktop: 100px;
+            --section-padding-mobile: 60px;
+            --container-padding: 5%;
+            --border-radius: 20px;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* 全域重設 CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* 導覽列風格 (Navigation Bar) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--container-padding);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-logo svg {
+            fill: var(--accent-red);
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #ccc;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-white);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-buy:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.03);
+        }
+
+        /* 漢堡選單 (Mobile Menu Icon) */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .mobile-toggle span {
+            width: 22px;
+            height: 2px;
+            background-color: var(--primary-white);
+            transition: var(--transition-smooth);
+        }
+
+        /* HERO 主視覺區塊 */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px var(--container-padding) 60px;
+            background: radial-gradient(circle at center, #222222 0%, #000000 70%);
+        }
+
+        .hero-tag {
+            color: var(--accent-red);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        /* 【教學說明 - 3. 如何修改標題與文字 (Headings & Typography)】
+           欲修改頁面標題文字，直接在下方 HTML 中找到對應的 <h1>, <h2> 替換即可。
+           如需調整大標題大小或字重，可調整 font-size 與 font-weight。 */
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            max-width: 900px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            color: #a1a1a6;
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--primary-white);
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff2233;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(224, 30, 46, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--primary-white);
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hero-image-container {
+            width: 100%;
+            max-width: 700px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .hero-product-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+            transition: var(--transition-smooth);
+        }
+
+        .hero-product-svg:hover {
+            transform: scale(1.02);
+        }
+
+        /* 產品列表區塊 (Product Showcase Cards) */
+        .section-products {
+            padding: var(--section-padding-desktop) var(--container-padding);
+            background-color: var(--primary-white);
+            color: var(--text-dark);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .product-image svg {
+            max-height: 100%;
+            width: auto;
+        }
+
+        .product-info {
+            width: 100%;
+        }
+
+        .product-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .product-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            height: 42px;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn-card {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            width: 100%;
+        }
+
+        .btn-card-black {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+        }
+
+        .btn-card-black:hover {
+            background-color: #333333;
+        }
+
+        /* 產品亮點 / 功能區塊 (Feature Highlight Section) */
+        .section-feature {
+            padding: var(--section-padding-desktop) var(--container-padding);
+            background-color: var(--secondary-black);
+            color: var(--primary-white);
+        }
+
+        .feature-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .feature-content h2 {
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .feature-content p {
+            font-size: 1.1rem;
+            color: #a1a1a6;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(224, 30, 46, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--accent-red);
+        }
+
+        .feature-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 0.95rem;
+            color: #86868b;
+            margin-bottom: 0;
+        }
+
+        .feature-visual {
+            position: relative;
+            background: linear-gradient(135deg, #1e1e1e 0%, #0a0a0a 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 頁尾區塊 (Footer) */
+        footer {
+            background-color: var(--primary-black);
+            color: #86868b;
+            padding: 60px var(--container-padding) 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-white);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            transition: var(--transition-smooth);
+        }
+
+        .footer-col a:hover {
+            color: var(--primary-white);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* ==========================================================================
+           【教學說明 - 4. 響應式媒體查詢 (Responsive Media Queries)】
+           此處針對手機與平板設備調整排版，讓網頁在所有螢幕尺寸均能完美呈現。
+           ========================================================================== */
+        @media (max-width: 900px) {
+            .feature-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-padding-desktop: var(--section-padding-mobile);
+            }
+
+            .nav-links {
+                display: none; /* 手機版可搭配 JS 開啟 */
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 Section -->
+    <nav class="navbar">
+        <a href="#" class="brand-logo">
+            <!-- Beats logo SVG -->
+            <svg viewBox="0 0 100 100">
+                <path d="M50,0 A50,50 0 1,0 100,50 A50,50 0 0,0 50,0 Z M50,75 A25,25 0 1,1 75,50 A25,25 0 0,1 50,75 Z M50,25 A25,25 0 0,0 25,50 L25,0 L50,0 Z"/>
+            </svg>
+            <span>beats</span>
+        </a>
+
+        <!-- 導覽連結 (可修改下方選單名稱) -->
+        <ul class="nav-links">
+            <li><a href="#headphones">頭戴式耳機</a></li>
+            <li><a href="#earbuds">入耳式耳機</a></li>
+            <li><a href="#speakers">喇叭</a></li>
+            <li><a href="#explore">探索特色</a></li>
+            <li><a href="#support">支援服務</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="btn-buy">選購商品</button>
+            <button class="mobile-toggle" aria-label="選購選單">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO 主視覺區塊 -->
+    <section class="hero">
+        <!-- 可在此修改次標題/標籤 -->
+        <span class="hero-tag">全新推出</span>
+        
+        <!-- 【如何修改主標題】：替換 <h1> 內的文字即可 -->
+        <h1 class="hero-title">BEATS SOLO 4</h1>
+        
+        <p class="hero-subtitle">重新定義標誌性音效。高達 50 小時電池續航力與空間音訊支援。</p>
+        
+        <div class="hero-cta-group">
+            <a href="#" class="btn-primary">
+                購買 Beats Solo 4 — NT$ 6,990
+            </a>
+            <a href="#" class="btn-secondary">深入瞭解</a>
+        </div>
+
+        <!-- 耳機 SVG 向量展示圖 (取代外部圖片，確保即時展現) -->
+        <div class="hero-image-container">
+            <svg class="hero-product-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 耳機頭帶 -->
+                <path d="M 120 220 C 120 80, 380 80, 380 220" stroke="#333" stroke-width="28" stroke-linecap="round"/>
+                <path d="M 120 220 C 120 80, 380 80, 380 220" stroke="#111" stroke-width="20" stroke-linecap="round"/>
+                <!-- 耳罩左 -->
+                <rect x="90" y="180" width="50" height="90" rx="25" fill="#1e1e1e" stroke="#333" stroke-width="4"/>
+                <rect x="100" y="190" width="30" height="70" rx="15" fill="#0d0d0d"/>
+                <circle cx="115" cy="225" r="12" fill="#e01e2e"/>
+                <!-- 耳罩右 -->
+                <rect x="360" y="180" width="50" height="90" rx="25" fill="#1e1e1e" stroke="#333" stroke-width="4"/>
+                <rect x="370" y="190" width="30" height="70" rx="15" fill="#0d0d0d"/>
+                <circle cx="385" cy="225" r="12" fill="#e01e2e"/>
+                <!-- 金屬支架與細節 -->
+                <path d="M 115 180 L 115 150" stroke="#555" stroke-width="8"/>
+                <path d="M 385 180 L 385 150" stroke="#555" stroke-width="8"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 熱門產品展示區塊 -->
+    <section class="section-products" id="headphones">
+        <div class="section-header">
+            <!-- 【如何修改區塊標題】 -->
+            <h2>探索熱門產品</h2>
+            <p>震撼音效、靈動時尚，專為音樂愛好者打造。</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- 產品卡片 1 -->
+            <div class="product-card">
+                <span class="product-badge">熱賣中</span>
+                <div class="product-image">
+                    <svg viewBox="0 0 200 200" width="160" height="160">
+                        <circle cx="100" cy="100" r="70" fill="#222" />
+                        <circle cx="100" cy="100" r="50" fill="#000" />
+                        <circle cx="100" cy="100" r="20" fill="#e01e2e" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Beats Studio Pro</h3>
+                    <p class="product-desc">主動單元主動降噪 (ANC) 與空間音訊效果。</p>
+                    <div class="product-price">NT$ 12,490</div>
+                    <div class="product-actions">
+                        <button class="btn-card btn-card-black">購買</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 產品卡片 2 -->
+            <div class="product-card">
+                <span class="product-badge">熱門款</span>
+                <div class="product-image">
+                    <svg viewBox="0 0 200 200" width="160" height="160">
+                        <rect x="50" y="80" width="100" height="50" rx="25" fill="#333" />
+                        <circle cx="75" cy="105" r="15" fill="#e01e2e" />
+                        <circle cx="125" cy="105" r="15" fill="#fff" />
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Beats Solo Buds</h3>
+                    <p class="product-desc">小巧精緻的入耳式耳機，帶來強勁純粹的聲音表現。</p>
+                    <div class="product-price">NT$ 2,790</div>
+                    <div class="product-actions">
+                        <button class="btn-card btn-card-black">購買</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 產品卡片 3 -->
+            <div class="product-card">
+                <span class="product-badge">新品</span>
+                <div class="product-image">
+                    <svg viewBox="0 0 200 200" width="160" height="160">
+                        <capsule>
+                            <rect x="40" y="70" width="120" height="60" rx="30" fill="#111" stroke="#444" stroke-width="4"/>
+                            <circle cx="100" cy="100" r="16" fill="#e01e2e" />
+                        </capsule>
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Beats Pill</h3>
+                    <p class="product-desc">強大便攜式藍牙喇叭，具有更加渾厚強勁的重低音。</p>
+                    <div class="product-price">NT$ 5,490</div>
+                    <div class="product-actions">
+                        <button class="btn-card btn-card-black">購買</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色亮點介紹區塊 -->
+    <section class="section-feature" id="explore">
+        <div class="feature-wrapper">
+            <div class="feature-content">
+                <h2>全心投身於<br>頂級音質之中</h2>
+                <p>Beats 專為實現聲學極致而設計，無論是創作音樂或沉浸於影音娛樂，都能感受每個細節帶來的動人衝擊。</p>
+
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">
+                            <h3>自訂聲學平台</h3>
+                            <p>獨家揚聲單元，有效減少高音失真，提供深沉渾厚的低音與清晰高音。</p>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">
+                            <h3>個人化空間音訊</h3>
+                            <p>動態頭部追蹤技術，讓您宛如置身於音樂會現場。</p>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">
+                            <h3>Apple 與 Android 無縫相容</h3>
+                            <p>支援一鍵輕鬆配對、尋找功能以及 Google Fast Pair 技術。</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <a href="#" class="btn-primary">探索全面功能</a>
+            </div>
+
+            <div class="feature-visual">
+                <!-- 視覺情境圖向量 SVG -->
+                <svg viewBox="0 0 400 400" width="100%" height="100%">
+                    <circle cx="200" cy="200" r="150" fill="none" stroke="#222" stroke-width="2"/>
+                    <circle cx="200" cy="200" r="110" fill="none" stroke="#333" stroke-width="2"/>
+                    <circle cx="200" cy="200" r="70" fill="none" stroke="#e01e2e" stroke-width="3" stroke-dasharray="10 5"/>
+                    <circle cx="200" cy="200" r="30" fill="#e01e2e"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>選購產品</h4>
+                    <ul>
+                        <li><a href="#">頭戴式耳機</a></li>
+                        <li><a href="#">入耳式耳機</a></li>
+                        <li><a href="#">揚聲器</a></li>
+                        <li><a href="#">配件</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>支援服務</h4>
+                    <ul>
+                        <li><a href="#">產品註冊</a></li>
+                        <li><a href="#">更新 Beats</a></li>
+                        <li><a href="#">客服中心</a></li>
+                        <li><a href="#">保固資訊</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>關於 Beats</h4>
+                    <ul>
+                        <li><a href="#">品牌故事</a></li>
+                        <li><a href="#">最新動態</a></li>
+                        <li><a href="#">工作機會</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>追蹤我們</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 Apple Inc. 保留一切權利。 | Beats by Dre Taiwan 復刻範本</div>
+                <div>台灣 (Taiwan) | 繁體中文</div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
